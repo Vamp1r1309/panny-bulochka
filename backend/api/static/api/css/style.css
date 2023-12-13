@@ -1,0 +1,234 @@
+body {
+  color: var(--tg-theme-text-color);
+  background: var(--tg-theme-bg-color);
+}
+
+/* block menu */
+.mb_class{
+  position: sticky;
+  top: 0;
+  z-index: 999;
+}
+
+.scrollmenu::-webkit-scrollbar {
+  width: 0;
+}
+.scrollmenu {
+    background-color: #fff;
+    overflow: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+    text-align: center;
+}
+
+.scrollmenu #menu_active {
+  display: inline-block;
+  color: #8a8888;
+  text-align: center;
+  padding: 5px;
+  margin: 5px;
+  text-decoration: none;
+  color: #000000;
+  border: 1px solid #e05c84;
+  border-radius: 12px;
+}
+
+.scrollmenu #menu_nav {
+    display: inline-block;
+    color: #8a8888;
+    text-align: center;
+
+    padding: 5px;
+    margin: 5px;
+    text-decoration: none;
+}
+
+.scrollmenu #menu_nav:active {
+    cursor: pointer;
+}
+
+.scrollmenu #menu_nav{
+  content: '';
+  border: 1px solid #fff;
+  border-radius: 12px;
+}
+
+/* block cards */
+.card {
+  width: 170px;
+  min-height: 300px;
+  box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.1);
+  /* display: flex; */
+  flex-direction: column; /* Размещаем элементы в колонку */
+  transition: 0.2s;
+  position: relative;
+  padding: 5px;
+}
+div.card {
+  border-radius: 15px;
+}
+/* При наведении на карточку - меняем цвет тени */
+.card:hover {
+  box-shadow: 4px 8px 16px rgba(255, 102, 51, 0.2);
+}
+
+.card__top {
+  flex: 0 0 180px; /* Задаем высоту 220px, запрещаем расширение и сужение по высоте */
+  position: relative;
+  overflow: hidden; /* Скрываем, что выходит за пределы */
+  border-radius: 10px;
+}
+
+/* Контейнер для картинки */
+.card__image {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.card__image > img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* Встраиваем картинку в контейнер card__image */
+  transition: 0.2s;
+}
+
+/* При наведении - увеличиваем картинку */
+
+
+.card__bottom {
+  display: flex;
+  flex-direction: column;
+  flex: 1 0 auto; /* Занимаем всю оставшуюся высоту карточки */
+  padding: 10px 5px 5px 5px;
+}
+.card__title {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 100%;
+  color: #414141;
+  text-align: left;
+}
+.card__title a{
+  list-style-type: none;
+}
+
+.card__title:hover {
+  color: #ff6633;
+}
+.card__prices {
+  display: flex;
+	justify-content: space-between;
+	align-items: end;
+  text-align: left;
+	margin-bottom: 5px;
+	width: 97%;
+	margin-left: 0 auto;
+	margin-right: auto; /* Размещаем цены равномерно в две колонки */
+}
+
+.card__price--common::after {
+  content: "₽";
+  margin-left: 2px;
+  position: relative;
+}
+
+.card__price--common {
+  font-weight: 600;
+  font-size: 14px;
+  color: #414141;
+  display: flex;
+  flex-wrap: wrap-reverse;
+}
+
+.card__weight {
+  font-weight: 400;
+  font-size: 11px;
+  color: #606060;
+  display: flex;
+  flex-wrap: wrap-reverse;
+  justify-content: flex-end;
+}
+
+.card__add {
+  display: block;
+  width: 100%;
+  font-weight: 600;
+  font-size: 16px;
+  color: #e05c84;
+  
+  text-align: center;
+  border: 1px solid #e05c84;
+  border-radius: 12px;
+  cursor: pointer; /* Меняем курсор при наведении */
+  transition: 0.2s;
+   /* Прижимаем кнопку к низу карточки */
+}
+
+
+.card__add:hover {
+  border: 1px solid #ff6633;
+  color: #fff;
+}
+.details-wrapper {
+  display: block;
+  margin-top: auto;
+}
+.container {
+	width: 100%;
+	max-width: 1100px;
+	padding: 0 20px;
+	margin: 0 auto;
+}
+
+.container_cards {
+	display: grid;
+	width: 100%;
+	grid-template-columns: repeat(2, 170px);
+	justify-content: center;
+	justify-items: center;
+	margin: 0 auto;
+	column-gap: 10px;
+	row-gap: 10px;
+}
+/* Счетчик */
+.items {
+	background: #f2ede7;
+  border: 1px solid #e05c84;
+	border-radius: 12px;
+	width: 100%;
+	display: flex;
+	font-size: 14px;
+  font-weight: 600;
+	overflow: hidden;
+  text-align: center;
+  align-items: center;
+  padding: 2.5px;
+}
+
+.items__control {
+	width: 100%;
+	cursor: pointer;
+	transition: 0.2s ease-in;
+	text-align: center;
+}
+
+.items__control:active {
+    color: #e05c84;
+    transition: color 0.2s linear;
+}
+
+
+
+.items__current {
+	width: 100%;
+}
+/*Корзина*/
+
+
+#counter-open{
+  display: none;
+}

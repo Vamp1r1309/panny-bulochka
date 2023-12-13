@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% load static %}
+{% load api_tags %}
+
+{% block title%}{{ title }}{% endblock %}
+{% block nav %} 
+	{% show_categories cat_selected%} 
+{% endblock nav %}
+{% block content %} 
+<section class="cards">
+	<div class="container container_cards">
+	{% load cache %}
+	<!-- Карточка товара -->
+	{% for item in posts%} 
+		{% if item.is_published %}
+		<div class="card" data-id="{{ item.pk }}">
+		<!-- Верхняя часть -->
+			<div class="card__top">
+				<!-- Изображение-ссылка товара -->
+				<a href="#" class="card__image">
+				<img src="{{ item.image.url}}" alt="{{ item.name }}"/></a>
+				<!-- Скидка на товар -->
+			</div>
+			<!-- Нижняя часть -->
+			<div class="card__bottom">
+				<p class="card__title">{{item.name}}</p>
+				<!-- Цены на товар (с учетом скидки и без)-->
+					
+				<!-- Ссылка-название товара -->
+				<!-- Кнопка добавить в корзину -->
+				<div class="details-wrapper">
+					<div class="card__prices">
+						<div class="card__price card__price--common">{{item.price|floatformat}}</div>
+						<div class="card__price card__weight">{{item.weight}}</div>
+					</div>
+					<div class="items" id='counter-open' data-open-counter>
+						<div class="items__control" data-action="minus">-</div>
+						<div class="items__current" data-counter>1</div>
+						<div class="items__control" data-action="plus">+</div>
+					</div>
+					<button data-cart class="button card__add" button__hidden>+</button>
+					
+				</div>
+			</div>
+		</div>
+		{% endif %}
+		{% endfor %}	
+	</div>
+	<div class="usercard" id="usercard"></div>		
+</section>
+<script src="{% static 'api/js/counter.js' %} "></script>
+<script src="{% static 'api/js/counter__bascet.js' %} "></script>
+<!-- <script src="{% static 'api/js/app.js' %}"></script> -->
+<!-- <script src="https://telegram.org/js/telegram-web-app.js"></script> -->
+
+{% endblock content %}
