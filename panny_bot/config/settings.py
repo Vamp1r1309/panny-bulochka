@@ -1,6 +1,6 @@
 import os
 from dotenv import load_dotenv
-from panny_bot.db import DataBase
+from db.db_panni import DataBase
 
 
 load_dotenv()

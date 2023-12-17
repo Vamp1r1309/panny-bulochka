@@ -6,7 +6,7 @@ load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
+print(BASE_DIR)
 # Ключ для хранения данных в корзине
 CART_SESSION_ID = 'cart'
 # Quick-start development settings - unsuitable for production
@@ -18,8 +18,8 @@ SECRET_KEY = os.getenv('SECRET_KEY', 'default-value')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True #os.getenv('DEBUG', default=False)
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '193.109.78.130']
-
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'www.pannybulochka.ru']
+CSRF_TRUSTED_ORIGINS=['https://www.pannybulochka.ru', 'http://193.109.78.130', 'https://193.109.78.130']
 # AUTH_USER_MODEL = 'users.User'
 # Application definition
 
@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_extensions',
+    'corsheaders',
 
     'api.apps.ApiConfig',
     'catalog.apps.CatalogConfig',
@@ -72,24 +73,12 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-if DEBUG:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
-        }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
-else:
-    DATABASES = {
-        'default': {
-            'ENGINE': os.getenv('DB_ENGINE', default='django.db.backends.postgresql'),
-            'NAME': os.getenv('DB_NAME', default='postgres'),
-            'USER': os.getenv('POSTGRES_USER', default='postgres'),
-            'PASSWORD': os.getenv('POSTGRES_PASSWORD', default='postgres'),
-            'HOST': os.getenv('DB_HOST', default='localhost'),
-            'PORT': os.getenv('DB_PORT', default='5432')
-        }
-    }
+}
 
 
 # Password validation
@@ -122,15 +111,19 @@ USE_I18N = True
 
 USE_TZ = True
 
+USE_L10N = True
+
+USE_TZ = True
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = 'static_backend/'
-STATIC_ROOT = BASE_DIR / 'static_backend'
+STATIC_URL = '/static/'
+STATIC_ROOT = '/panny-bulochka/backend/var/www/static/'
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'var/www/panny_backend/media'
+MEDIA_ROOT = BASE_DIR / '/var/www/static/media'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

@@ -1,1 +1,1 @@
-from panny_bot.config.settings import *
+from config.settings import *

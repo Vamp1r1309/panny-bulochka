@@ -1,5 +1,4 @@
 from django.contrib import admin
-from mptt.admin import DraggableMPTTAdmin
 from django.utils.safestring import mark_safe
 
 from .models import Catalog, Category, UserTelegram, Cart

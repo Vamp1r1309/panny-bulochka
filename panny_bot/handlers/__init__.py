@@ -1,3 +1,3 @@
-from panny_bot.handlers.run_bot import *
-from panny_bot.handlers.form import *
-from panny_bot.handlers.main_handler import *
+from run_bot import *
+from form import *
+from main_handler import *

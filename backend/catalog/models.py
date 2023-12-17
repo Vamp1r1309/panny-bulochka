@@ -4,7 +4,6 @@ from django.db import models
 from django.db.models.query import QuerySet
 from django.urls import reverse
 from modules.services.utils import unique_slugify
-from mptt.models import MPTTModel
 
 
 class PublishedManager(models.Manager):

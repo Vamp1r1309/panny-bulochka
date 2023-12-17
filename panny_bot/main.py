@@ -1,9 +1,9 @@
 import asyncio
 from aiogram import Bot, Dispatcher, F
 
-from panny_bot.config import BOT_TOKEN
-from panny_bot.utils import StateForm
-from panny_bot.handlers import *
+from config import BOT_TOKEN
+from utils import StateForm
+from handlers import *
     
 
 async def start():

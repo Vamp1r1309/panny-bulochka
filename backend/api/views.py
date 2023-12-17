@@ -1,7 +1,7 @@
 from django.http import HttpResponse, HttpResponseNotFound
 from django.shortcuts import render, get_object_or_404
 from django.views.decorators.csrf import requires_csrf_token
-from django.views.decorators.cache import cache_page 
+from django.views.decorators.cache import cache_page
 from api.forms import AddRegisterUserForm
 from catalog.models import Category, Catalog, UserTelegram
 

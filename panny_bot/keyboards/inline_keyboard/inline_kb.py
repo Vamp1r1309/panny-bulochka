@@ -1,6 +1,6 @@
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton, WebAppInfo
 
-web_app = WebAppInfo(url="https://41f0-95-25-166-90.ngrok-free.app/register")
+web_app = WebAppInfo(url="https://pannybulochka.ddns.net/")
 main_kb = InlineKeyboardMarkup(
     inline_keyboard=[
         [

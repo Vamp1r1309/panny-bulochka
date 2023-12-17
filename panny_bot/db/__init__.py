@@ -1,1 +1,1 @@
-from panny_bot.db.db_panni import *
+from db_panni import *
