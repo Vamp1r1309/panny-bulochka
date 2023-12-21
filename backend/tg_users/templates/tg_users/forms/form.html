@@ -15,30 +15,16 @@
 					{% csrf_token %}
 					<div class="form-error">{{ form.non_fields_errors}}</div>
 					{% for f in form %} 
-					{% if f.label == "Телеграм ID"%}
-
-					<div class="mb-3">
-						<label class="form-label" for="{{ f.id_for_label }}">{{ f.label }}</label>
-						{{ f }}
-					</div>
-
-					{% elif f.label == "Дата рождения" %}
-
-					<label for="{{ f.id_for_label }}">{{ f.label }}</label>
-					{{ f }} 
-						{% if f.errors %}
-						<div class="alert alert-danger">{{f.errors}}</div>
-						{% endif %} 
-					{% else %}
-
-					<p>
-						<label class="form-label" for="{{ f.id_for_label }}">{{ f.label }}</label>
-						{{ f }}
-					</p>
-						{% if f.errors %}
-							<div class="alert alert-danger">{{f.errors}}</div>
-						{% endif %} 
-					{% endif %} 
+						{% if f.label == 'Telegram id'%}
+							<label  for="{{ f.id_for_label }}">Telegram id</label>
+							<input class="form-control" type="number" value="{{chat_id}}"> <br>
+						{% else %}
+							<label for="{{ f.id_for_label }}">{{ f.label }}</label>
+							{{ f }} <br>
+							{% if f.errors %}
+								<div class="alert alert-danger">{{f.errors}}</div>
+							{% endif %} 
+						{% endif %}
 					{% endfor %}
 					<div class="d-grid gap-2">
 						<button type="submit" class="btn btn-primary mt-4">
@@ -48,5 +34,7 @@
 				</form>
 			</div>
 		</div>
+		<script src="{% static 'api/js/tg_id_form.js' %}"></script>
+		<script src="https://telegram.org/js/telegram-web-app.js"></script>
 	</body>
 </html>

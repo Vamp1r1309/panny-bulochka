@@ -18,8 +18,8 @@ SECRET_KEY = os.getenv('SECRET_KEY', 'default-value')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True #os.getenv('DEBUG', default=False)
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'www.pannybulochka.ru']
-CSRF_TRUSTED_ORIGINS=['https://www.pannybulochka.ru', 'http://193.109.78.130', 'https://193.109.78.130']
+ALLOWED_HOSTS = ['f048-95-25-162-208.ngrok-free.app','127.0.0.1', 'localhost', 'www.pannybulochka.ru']
+CSRF_TRUSTED_ORIGINS=['https://f048-95-25-162-208.ngrok-free.app', 'https://www.pannybulochka.ru', 'http://193.109.78.130', 'https://193.109.78.130']
 # AUTH_USER_MODEL = 'users.User'
 # Application definition
 
@@ -36,6 +36,8 @@ INSTALLED_APPS = [
     'api.apps.ApiConfig',
     'catalog.apps.CatalogConfig',
     'users.apps.UsersConfig',
+    'basket.apps.BasketConfig',
+    'tg_users.apps.TgUsersConfig',
     'modules.services',
 ]
 
@@ -129,3 +131,6 @@ MEDIA_ROOT = BASE_DIR / '/var/www/static/media'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Empty message
+EMPTY_MSG = '-пусто-'

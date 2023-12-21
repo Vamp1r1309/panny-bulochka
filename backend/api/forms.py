@@ -29,11 +29,8 @@ class AddRegisterUserForm(forms.ModelForm):
 
     class Meta:
         model = UserTelegram
-        fields = ['telegram_id', 'username', 'phone_user', 'date_of_birth']
+        fields = ['id', 'username', 'phone_user', 'date_of_birth']
         widgets = {
-            'telegram_id': forms.TextInput(attrs={'class': 'form-control',
-                                                  'id': 'disabledTextInput',
-                                                  'value': random.randint(0, 100000)}),
             'phone_user': forms.TextInput(attrs={'class': 'form-control'}),
             'date_of_birth': forms.TextInput(attrs={'class': 'form-control', 'type': 'date'}),
             }

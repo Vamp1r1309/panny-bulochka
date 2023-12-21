@@ -1,13 +1,22 @@
-from django.http import HttpResponse, HttpResponseNotFound
+from django.http import HttpResponse,HttpResponseRedirect, HttpResponseNotFound, JsonResponse
+from django.urls import reverse
 from django.shortcuts import render, get_object_or_404
-from django.views.decorators.csrf import requires_csrf_token
 from django.views.decorators.cache import cache_page
-from api.forms import AddRegisterUserForm
-from catalog.models import Category, Catalog, UserTelegram
+from catalog.models import Category, Catalog
+from tg_users.models import UserTelegram
 
 
 
-def index(request):
+def index(request, chat_id):
+    """
+    Вывод главной страницы
+    """
+    user = UserTelegram.objects.filter(id=chat_id)
+    print(user)
+    if not user:
+        UserTelegram.objects.create(id=chat_id)
+        
+    
     post = Catalog.published.filter(is_published=1)
     data = {
         'title': 'Главная страница',
@@ -19,6 +28,9 @@ def index(request):
 
 
 def show_category(request, cat_slug):
+    """
+    Вывод товара по категориям
+    """
     category = get_object_or_404(Category, slug=cat_slug)
     posts = Catalog.published.filter(cats__id=category.pk)
     data = {
@@ -30,25 +42,11 @@ def show_category(request, cat_slug):
 
 
 def show_posts(request, cat_slug):
+    """
+    Показ опубликованных постов
+    """
     post = Catalog.published.filter(cats__slug=cat_slug)
     data = {
         'menu': post,
-        # 'cat_selected': post_tags,
     }
     return render(request, 'api/index.html', context=data)
-
-def add_user_tg(request):
-    print(request)
-    if request.method == 'POST':
-        form = AddRegisterUserForm(request.POST)
-        if form.is_valid():
-            form.save()
-    else:
-        form = AddRegisterUserForm()
-    data = {
-        'form': form
-    }
-    return render(request, 'api/forms/form.html', data)
-
-def page_not_found(request, exception):
-    return HttpResponseNotFound("<h1>Страница не найдена</h1>")

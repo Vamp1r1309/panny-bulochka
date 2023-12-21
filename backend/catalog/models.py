@@ -52,6 +52,7 @@ class Catalog(models.Model):
         blank=True,
         null='100г.'
     )
+    quantity = models.PositiveIntegerField(default=1)
     price = models.DecimalField(
         verbose_name='Цена',
         decimal_places=2,
@@ -92,48 +93,39 @@ class Catalog(models.Model):
 
 class UserTelegram(models.Model):
     """Пользовательский класс для хранения информации для пользователей"""
-
-    telegram_id = models.CharField(
-        'Телеграм ID',
-        max_length=100,
-        unique=True,
-        default=random.randint(0, 100000)
-
+    id = models.BigIntegerField(
+        'Telegram id',
+        primary_key=True,
+        unique=True
     )
+
     username = models.CharField(
         'Имя пользователя',
         max_length=150,
+        null=True,
     )
 
     date_of_birth = models.DateField(
         'Дата рождения',
+        null=True
     )
     phone_user = models.CharField(
         'Номер телефона',
         max_length=100,
-        unique=True
+        unique=True,
+        null=True
     )
+    time_create = models.DateTimeField(
+        'Зарегистрирован',
+        auto_now_add=True)
 
     class Meta:
         verbose_name = 'Пользователь'
         verbose_name_plural = 'Пользователи'
-        ordering = ('id',)
+        ordering = ('-id',)
 
 
     def __str__(self):
+        if self.username is None:
+            return str(self.id)
         return self.username
-
-
-class Cart(models.Model):
-    user = models.ForeignKey(UserTelegram, on_delete=models.CASCADE)
-    product = models.ForeignKey(Catalog, on_delete=models.CASCADE)
-    quantity = models.PositiveIntegerField(default=0)
-    created_timestamp = models.DateTimeField(auto_now_add=True)
-
-    class Meta:
-        verbose_name = 'Корзина'
-        verbose_name_plural = 'Корзина'
-        ordering = ('id',)
-
-    def __str__(self) -> str:
-        return f'Корзина для {self.user.user} | Продукт {self.product.name}'

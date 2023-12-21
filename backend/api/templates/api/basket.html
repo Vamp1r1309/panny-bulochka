@@ -1,0 +1,55 @@
+<div class="mb-4 card_none">
+	<div class="card-body">
+		<h5 class="card-title">Ваш заказ</h4>
+		<!-- cart-wrapper -->
+		<div class="cart-wrapper">
+	    </div>
+						<!-- // cart-wrapper -->
+			<div class="cart-item" data-id="">
+				<div class="cart-item__top">
+					<div class="cart-item__img">
+						<img src="" alt="">
+					</div>
+					<div class="cart-item__desc">
+						<div class="cart-item__title"></div>
+										<!-- cart-item__details -->
+						<div class="cart-item__details">
+
+							<div class="items items--small counter-wrapper">
+								<button class="items__control" data-action="minus">-</button>
+						        <div class="items__current" data-counter></div>
+						        <button class="items__control" data-action="plus">+</button>
+							</div>
+
+							<div class="price">
+							<div class="price__currency"> ₽</div>
+							</div>
+
+						</div>
+										<!-- // cart-item__details -->
+
+					</div>
+				</div>
+			</div>
+			{% endfor %}
+						<!-- Стоимость заказа -->
+		<div class="cart-total">
+			<p><span class="h5">Итого:</span> <span class="total-price">330</span> <span class="rouble">₽</span></p>
+		</div>
+						<!-- // Стоимость заказа -->
+
+	</div>
+
+					<!-- Оформить заказ -->
+	<div id="order-form" class="card-body border-top">
+		<h5 class="card-title">Оформить заказ</h4>
+		<form>
+			<div class="form-group">
+				<input type="text" class="form-control" placeholder="Адреcс доставки:">
+			</div>
+			<button type="submit" class="btn btn-primary">Заказать</button>
+		</form>
+	</div>
+					<!-- // Оформить заказ -->
+
+</div>
