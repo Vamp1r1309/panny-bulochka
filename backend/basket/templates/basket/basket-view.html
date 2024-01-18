@@ -57,9 +57,9 @@
         </div>
         <div class="btn-cont" id="button_none" data-index="{{product.id}}"><a href="{% url 'basket:sendMessageTelegram' user_id %}">Оформить заказ</a></div>
 </section>
-<script src="../../static/basket/js/add_cart_complete.js"></script>
-<script src="../../static/basket/js/counter_basket.js"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="{% static 'basket/js/add_cart_complete.js'%}"></script>
+<script src="{% static 'basket/js/counter_basket.js'%}"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script >
 	window.addEventListener('click', function(event){
         if (event.target.dataset.action === 'delete-cart'){

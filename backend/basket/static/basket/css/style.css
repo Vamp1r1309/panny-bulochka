@@ -267,7 +267,7 @@ body {
   transition: 0.2s;
   width: 100%;
 }
-.btn-cont button{
+.btn-cont a{
   color: #FFFFFF;
   text-decoration: none;
   text-align: center;
