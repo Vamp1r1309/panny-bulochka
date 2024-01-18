@@ -1,0 +1,139 @@
+{% extends 'cart_base.html'%}
+{% block content %}
+{% load static %}
+{% load mathfilters %}
+
+
+<section class="section-cart">
+    <div class="container">
+        <div class="header_cart">
+            <a href="{% url 'api:home' user_id  %}"><img src="{% static 'basket/img/icons/back.svg'%}" class="product__img-header"  alt=""></a>
+            <h1 class="title-1">Ваш заказ</h1>
+        </div>
+    </div>
+        <div class="section-cart__body">
+            <div class="container">
+                <section class="cart">
+                    <header class="cart-header">
+                        <div class="cart-header__title">Наименование</div>
+                        <div class="cart-header__count">Количество</div>
+                        <div class="cart-header__cost">Стоимость</div>
+                    </header>
+                    {% if cart %}
+                        {% for item in cart %}
+                            {% with product=item.product %}
+                                <section class="product" id="{{ product.id }}">
+                                    <div class="product__img">
+                                        <img src="{{ product.image.url }}"  alt="">
+                                    </div>
+                                    <div class="product__title">{{ product.name }}</div>
+                                    <div class="product__controls" data-index="{{ product.id }}">
+                                        <button type="button" class="delete-button">
+                                            <img src="{% static 'basket/img/icons/x.svg'%}" alt="Delete" data-action="delete-cart">
+                                        </button>
+                                    </div>
+                                    <div class="count__controls" data-index="{{product.id}}">
+                                        <div class="items" id='counter-open' data-open-counter>
+                                            <button class="items__control" data-action="minus_cart">-</button>
+                                            <div id="select" class="items__current" data-counter-cart>{{item.qty}}</div>
+                                            <button id="button_plus" class="items__control" data-action="plus_cart">+</button>
+                                        </div>
+                                    </div>
+                                    <div class="product__price">{{ product.price }}</div>
+                                </section>
+                            {% endwith %}
+                        {% endfor %}
+                    {% else %}
+                        <div class="empty-carts">
+                            <p class="emppty-carts__text">Ваша корзина пуста</p>
+                        </div>
+                    {% endif %}
+                    <footer class="cart-footer">
+                        <div class="cart-footer__count">Всего:</div>
+                        <div class="cart-footer__price" id="total">{{ cart.get_total_price }} руб.</div>
+                    </footer>
+                </section>
+            </div>
+        </div>
+        <div class="btn-cont" id="button_none" data-index="{{product.id}}"><a href="{% url 'basket:sendMessageTelegram' user_id %}">Оформить заказ</a></div>
+</section>
+<script src="../../static/basket/js/add_cart_complete.js"></script>
+<script src="../../static/basket/js/counter_basket.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script >
+	window.addEventListener('click', function(event){
+        if (event.target.dataset.action === 'delete-cart'){
+            const counterWrapper = event.target.closest('.product__controls');
+            console.log(counterWrapper.dataset.index)
+            $.ajax({
+				type: 'POST',
+				url: '{% url "basket:delete-to-cart" user_id %}',
+				data: {
+					product_id: counterWrapper.dataset.index,
+					
+					csrfmiddlewaretoken: '{{ csrf_token }}',
+					action: 'post'
+				},
+				success: function(response){
+					// qty_update.value = response.qty;
+                    location.reload();
+                    console.log(response);
+					
+				},
+				error: function(response){
+					console.log(response);
+				},
+			})
+        }
+        if (event.target.dataset.action === 'plus_cart' || event.target.dataset.action === 'minus_cart'){
+            // const btn_hidden = event.target.closest('.button')
+		    const counterWrapper = event.target.closest('.count__controls');
+		    // Находим div с числом счетчика
+		    const counter = counterWrapper.querySelector('[data-counter-cart]');
+            if (event.target.dataset.action === 'plus_cart'){
+                console.log(counter)
+                $.ajax({
+                    type: 'POST',
+                    url: '{% url "basket:update-to-cart" user_id %}',
+                    data: {
+                        product_id: counterWrapper.dataset.index,
+                        product_qty: counter.innerText,
+                        csrfmiddlewaretoken: '{{ csrf_token }}',
+                        action: 'post'
+                    },
+                    success: function(response){
+                        location.reload()
+                        console.log(response);
+                        
+                    },
+                    error: function(response){
+                        console.log(response);
+                    },
+                })
+            }
+            if (event.target.dataset.action === 'minus_cart'){
+                if (parseInt(counter.innerText) > 0){
+                    $.ajax({
+                        type: 'POST',
+                        url: '{% url "basket:update-to-cart" user_id %}',
+                        data: {
+                            product_id: counterWrapper.dataset.index,
+                            product_qty: counter.innerText,
+                            csrfmiddlewaretoken: '{{ csrf_token }}',
+                            action: 'post'
+                        },
+                        success: function(response){
+                            location.reload()
+                            console.log(response);
+                            
+                        },
+                        error: function(response){
+                            console.log(response);
+                        },
+                    })
+                }
+            }
+        }
+	})
+</script>
+{% endblock content%}
