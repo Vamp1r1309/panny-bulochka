@@ -1,5 +1,7 @@
 from django.db import models
-from catalog.models import UserTelegram, Catalog
+
+from catalog.models import Catalog
+from tg_users.models import UserTelegram
 
 # Create your models here.
 class Basket(models.Model):

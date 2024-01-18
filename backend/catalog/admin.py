@@ -13,7 +13,7 @@ class CatalogAdmin(admin.ModelAdmin):
         'time_update', 'weight', 'is_published',)
     search_fields = ('name', 'price', 'cats',)
     list_filter = ('id', 'cats')
-    list_editable = ['price', 'weight', 'is_published']
+    list_editable = ['price', 'weight']
     empty_value_display = settings.EMPTY_MSG
 
     @admin.display(description='Категории')

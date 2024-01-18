@@ -1,7 +1,7 @@
 import random
 import re
 from django import forms
-from catalog.models import UserTelegram
+from tg_users.models import UserTelegram
 from django.core.exceptions import ValidationError
 from django.utils.deconstruct import deconstructible
 
@@ -20,17 +20,13 @@ class RussianValidator:
 
 
 class AddRegisterUserForm(forms.ModelForm):
-
-    username = forms.CharField(max_length=50,
-                               min_length=2,
-                               label='Ваше Имя',
-                               widget=forms.TextInput(attrs={'class': 'form-control'}),
-                               validators=[RussianValidator()])
-
+    
     class Meta:
         model = UserTelegram
         fields = ['id', 'username', 'phone_user', 'date_of_birth']
         widgets = {
+            'id': forms.HiddenInput(),
+            'username': forms.TextInput(attrs={'class': 'form-control', 'name': 'name'}),
             'phone_user': forms.TextInput(attrs={'class': 'form-control'}),
             'date_of_birth': forms.TextInput(attrs={'class': 'form-control', 'type': 'date'}),
             }

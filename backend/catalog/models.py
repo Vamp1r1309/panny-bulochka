@@ -1,10 +1,8 @@
-import random
-
 from django.db import models
 from django.db.models.query import QuerySet
 from django.urls import reverse
-from modules.services.utils import unique_slugify
 
+from tg_users.models import UserTelegram
 
 class PublishedManager(models.Manager):
     def get_queryset(self) -> QuerySet:
@@ -30,8 +28,8 @@ class Category(models.Model):
     def __str__(self):
         return self.name
     
-    def get_absolute_url(self):
-        return reverse('api:category', kwargs={"cat_slug": self.slug})
+    # def get_absolute_url(self):
+    #     return reverse('api:category', kwargs={"cat_slug": self.slug})
 
 
 # Create your models here.
@@ -87,45 +85,24 @@ class Catalog(models.Model):
         verbose_name_plural = 'Товары'
         ordering = ('-time_create',)
 
+    # def get_absolute_url(self):
+    #     return reverse('api:home', kwargs={"user_id": self.id})
+
+    @property
+    def full_image_url(self):
+        """
+        Returns:
+            str: The full image URL.
+        """
+        return self.image.url if self.image else ''
+
     def __str__(self):
         return self.name
 
 
-class UserTelegram(models.Model):
-    """Пользовательский класс для хранения информации для пользователей"""
-    id = models.BigIntegerField(
-        'Telegram id',
-        primary_key=True,
-        unique=True
-    )
+class ProductProxy(Catalog):
 
-    username = models.CharField(
-        'Имя пользователя',
-        max_length=150,
-        null=True,
-    )
-
-    date_of_birth = models.DateField(
-        'Дата рождения',
-        null=True
-    )
-    phone_user = models.CharField(
-        'Номер телефона',
-        max_length=100,
-        unique=True,
-        null=True
-    )
-    time_create = models.DateTimeField(
-        'Зарегистрирован',
-        auto_now_add=True)
+    objects = PublishedManager()
 
     class Meta:
-        verbose_name = 'Пользователь'
-        verbose_name_plural = 'Пользователи'
-        ordering = ('-id',)
-
-
-    def __str__(self):
-        if self.username is None:
-            return str(self.id)
-        return self.username
+        proxy = True

@@ -4,55 +4,126 @@
 
 {% block title%}{{ title }}{% endblock %}
 {% block nav %} 
-	{% show_categories cat_selected%} 
+	{% show_categories user_id cat_selected%} 
 {% endblock nav %}
-{% block content %} 
+{% block content %}
+
 <section class="cards">
 	<div class="container container_cards">
 	{% load cache %}
 	<!-- Карточка товара -->
 	{% for item in posts%} 
-		{% if item.is_published %}
 		<div class="card" data-id="{{ item.pk }}">
 		<!-- Верхняя часть -->
 			<div class="card__top">
 				<!-- Изображение-ссылка товара -->
 				<a href="#" class="card__image">
 				<img class="product-img" src="{{ item.image.url}}" alt="{{ item.name }}"/></a>
-				<!-- Скидка на товар -->
 			</div>
 			<!-- Нижняя часть -->
 			<div class="card__bottom">
 				<p class="card__title">{{item.name}}</p>
-				<!-- Цены на товар (с учетом скидки и без)-->
 					
-				<!-- Ссылка-название товара -->
-				<!-- Кнопка добавить в корзину -->
-				<div class="details-wrapper">
+
+				<div class="details-wrapper" id="{{ item.pk }}">
 					<div class="card__prices">
 						<div class="card__price card__price--common">{{item.price|floatformat}}</div>
 						<div class="card__price card__weight">{{item.weight}}</div>
 					</div>
 					<div class="items" id='counter-open' data-open-counter>
 						<button class="items__control" data-action="minus">-</button>
-						<div class="items__current" data-counter>{{item.quantity}}</div>
-						<button class="items__control" data-action="plus">+</button>
+						<div id="select" class="items__current" data-counter>{{ item.quantity }}</div>
+						<button id="button_plus" class="items__control" data-action="plus">+</button>
 					</div>
-					<a href="#"><input data-cart class="button card__add" button__hidden value="+"></a>
+					<button id="add-button" data-cart class="button card__add" button__hidden>+</button>
 					
 				</div>
 			</div>
 		</div>
-		{% endif %}
 		{% endfor %}	
 	</div>
 	<div class="usercard" id="usercard"></div>
 </section>
+<br>
+<br>
+<div class="d-grid gap-2 btn-cont" id="button_none">
+	<a href="{% url 'basket:basket-view' user_id %}" class="join_btn-api">Перейти в корзину</a>
+</div>
 <script src="{% static 'api/js/counter.js' %} "></script>
 <script src="{% static 'api/js/counter__bascet.js' %} "></script>
-<!-- <script src="{% static 'api/js/app.js' %}"></script> -->
-<!-- <script src="https://telegram.org/js/telegram-web-app.js"></script> -->
-<div class="d-grid gap-2 btn-cont">
-	<a href="#"></a><input class="button__bottom" type="submit" value="Оформить заказ">		
-</div>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script >
+	window.addEventListener('click', function(event){
+		const detailsWrapper = event.target.closest('.details-wrapper');
+		const currentUrl = window.location.href
+		console.log(currentUrl)
+		if(event.target.hasAttribute('data-cart'))
+		{
+			$.ajax({
+				type: 'POST',
+				url: '{% url "basket:add-to-cart" user_id %}',
+				data: {
+					product_id: detailsWrapper.id,
+					product_qty: detailsWrapper.querySelector('[data-counter]').innerText,
+					current_url: currentUrl,
+					csrfmiddlewaretoken: '{{ csrf_token }}',
+					action: 'post'
+				},
+				success: function(response){
+					return true
+					
+				},
+				error: function(response){
+					console.log(response);
+				},
+			})
+		}
+		if (event.target.dataset.action === 'plus' || event.target.dataset.action === 'minus'){
+			if (event.target.dataset.action === 'plus'){
+		
+				$.ajax({
+					type: 'POST',
+					url: '{% url "basket:update-to-cart" user_id %}',
+					data: {
+						product_id: detailsWrapper.id,
+						product_qty: detailsWrapper.querySelector('[data-counter]').innerText,
+						csrfmiddlewaretoken: '{{ csrf_token }}',
+						action: 'post'
+					},
+					success: function(response){
+						return true
+					},
+					error: function(response){
+						console.log(response);
+					},
+				})
+			}
+			if (event.target.dataset.action === 'minus'){
+				let url = '';
+				if (detailsWrapper.querySelector('[data-counter]').innerText > 1){
+					url = '{% url "basket:update-to-cart" user_id %}'
+				}
+				else{
+					url = '{% url "basket:delete-to-cart" user_id %}';
+				}
+				$.ajax({
+					type: 'POST',
+					url: url,
+					data: {
+						product_id: detailsWrapper.id,
+						product_qty: detailsWrapper.querySelector('[data-counter]').innerText,
+						csrfmiddlewaretoken: '{{ csrf_token }}',
+						action: 'post'
+					},
+					success: function(response){
+						return true
+					},
+					error: function(response){
+						console.log(response);
+					},
+				})
+			}
+		}
+	})
+</script>
 {% endblock content %}

@@ -2,9 +2,9 @@
 	<div class="scrollmenu scrollmenu__vav" id="navbar">
 		{% for cat in cats %}
 			{% if cat.id == cat_selected %}
-				<a href="{{ cat.get_absolute_url }}" id="menu_active">{{ cat.name }}</a>
+				<a href="{% url 'api:category' user_id cat.slug %}" id="menu_active">{{ cat.name }}</a>
 			{% else %}
-				<a href="{{ cat.get_absolute_url }}" id ="menu_nav">{{ cat.name }}</a>
+				<a href="{% url 'api:category' user_id cat.slug %}" id ="menu_nav">{{ cat.name }}</a>
 			{% endif %}	
 		{% endfor %}
 	</div>
