@@ -7,6 +7,8 @@ from bot.utils import set_commands
 
 async def get_start(message: Message, bot: Bot):
     await set_commands(bot)
+    print(message.from_user.id)
+    print(type(message.from_user.id))
     web_app_register = WebAppInfo(url=f"https://www.pannybulochka.ru/register/{message.from_user.id}")
     main_kb = InlineKeyboardMarkup(
         inline_keyboard=[

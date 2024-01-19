@@ -126,7 +126,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = '/panny_bulochka/backend/var/www/static/'
+STATIC_ROOT = '/panny-bulochka/backend/var/www/static/'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / '/var/www/static/media'
