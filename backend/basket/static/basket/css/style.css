@@ -244,13 +244,13 @@ body {
   align-items: center; }
 
 /*# sourceMappingURL=main.css.map */
+
 .btn-cont {
   margin-top: 30px;
-  width: 100%;
-  height: 40px;
+  height: 50px;
+  margin-bottom: 30px;
   position: fixed;
   bottom: 0;
-  left: 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -258,15 +258,17 @@ body {
 
 
 .btn-cont {
+  min-height: 10px;
   background-color: #e05c84;
-  border-radius: 0%;
+  border-radius: 15px;
   font-weight: 600;
   font-size: 16px;
-  align-items: center;
-  text-align: center;
   transition: 0.2s;
-  width: 100%;
+  width: 80%;
+  margin-left: 25px;
+  margin-right: 25px;
 }
+
 .btn-cont a{
   color: #FFFFFF;
   text-decoration: none;

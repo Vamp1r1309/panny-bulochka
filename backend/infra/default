@@ -1,0 +1,62 @@
+server {
+    server_name www.pannybulochka.ru;
+
+    location /favicon.ico { 
+	access_log    off;
+	log_not_found off;
+    }
+    
+    location /admin/ {
+	proxy_pass       http://127.0.0.1:8000;
+    }
+
+    location /register/ {
+	proxy_pass       http://127.0.0.1:8000;
+    }
+
+    location /basket/ {
+	proxy_pass	http://127.0.0.1:8000;
+    }
+
+
+    location /static/ {
+	alias		/panny-bulochka/backend/var/www/static/;
+    }
+
+    location /media/ {
+	alias /var/www/static/media/;
+    }
+
+    location /api/ {
+        proxy_pass      http://127.0.0.1:8000;
+    }
+
+    location / {
+	index     index.html index.htm;
+	try_files $uri /index.html;
+    }
+
+
+    listen 443 ssl; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/www.pannybulochka.ru/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/www.pannybulochka.ru/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+
+
+
+
+}
+server {
+    if ($host = pannybulochka.ddns.net) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+
+    listen 80;
+    server_name pannybulochka.ddns.net;
+    return 404; # managed by Certbot
+
+
+}

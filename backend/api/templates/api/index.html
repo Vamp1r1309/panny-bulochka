@@ -7,7 +7,6 @@
 	{% show_categories user_id cat_selected%} 
 {% endblock nav %}
 {% block content %}
-
 <section class="cards">
 	<div class="container container_cards">
 	{% load cache %}
@@ -41,13 +40,13 @@
 			</div>
 		</div>
 		{% endfor %}	
+	<br>
+	<br>
+	<div class="d-grid gap-2 btn-cont" id="button_none">
+        	<a href="{% url 'basket:basket-view' user_id %}" class="join_btn-api">Перейти в корзину</a>
 	</div>
 	<div class="usercard" id="usercard"></div>
 </section>
-<br>
-<br>
-<div class="d-grid gap-2 btn-cont" id="button_none">
-	<a href="{% url 'basket:basket-view' user_id %}" class="join_btn-api">Перейти в корзину</a>
 </div>
 <script src="{% static 'api/js/counter.js' %} "></script>
 <script src="{% static 'api/js/counter__bascet.js' %} "></script>
@@ -126,4 +125,15 @@
 		}
 	})
 </script>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+	<script>
+		let tg = window.Telegram;
+
+		if(tg != undefined){
+			if (tg.WebApp != undefined && tg.WebApp.initData != undefined){
+				tg.WebApp.expand();
+
+			}
+		}
+	</script>
 {% endblock content %}

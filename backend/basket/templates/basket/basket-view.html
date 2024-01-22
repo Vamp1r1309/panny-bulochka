@@ -11,6 +11,12 @@
             <h1 class="title-1">Ваш заказ</h1>
         </div>
     </div>
+	{% if message %}
+            <div class="alert alert-success" role="alert">
+                <h4 class="alert-heading"><p class="text-justify">Спасибо за заказ!</p></h4>
+                <p>{{ message }}</p>
+            </div>
+        {% else %}
         <div class="section-cart__body">
             <div class="container">
                 <section class="cart">
@@ -52,11 +58,15 @@
                         <div class="cart-footer__count">Всего:</div>
                         <div class="cart-footer__price" id="total">{{ cart.get_total_price }} руб.</div>
                     </footer>
-                </section>
+                    <br>
+        	    <br>
+		    <div class="btn-cont" id="button_none" data-index="{{product.id}}"><a href="{% url 'basket:message' user_id %}" data-action="complete_order_cart">Оформить заказ</a></div>
+		</section>
             </div>
         </div>
-        <div class="btn-cont" id="button_none" data-index="{{product.id}}"><a href="{% url 'basket:sendMessageTelegram' user_id %}">Оформить заказ</a></div>
+	{% endif %}
 </section>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
 <script src="{% static 'basket/js/add_cart_complete.js'%}"></script>
 <script src="{% static 'basket/js/counter_basket.js'%}"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>

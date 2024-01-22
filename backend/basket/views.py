@@ -1,7 +1,7 @@
 import requests
 from django.shortcuts import render, get_object_or_404
 from django.conf import settings
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseRedirect
 
 
 from .cart import Cart
@@ -61,7 +61,7 @@ def basket_update(request, user_id):
         return response
 
 
-def senMessageOrderInTelegram(request, user_id):
+def sendMessageOrderInTelegram(request, user_id):
     cart = Cart(request)
     user = get_object_or_404(UserTelegram, id=user_id)
     messageInTGBOT = cart.sendMessage()
@@ -83,9 +83,10 @@ def senMessageOrderInTelegram(request, user_id):
 
     requests.get(URI_API, params=params)
     cart.clean_users_session()
+    message = "Ваш заказ успешно сформирован, ожидайте звонка оператора!Заказ в боте продублирован!Хорошего дня"
     context = {
-        'cart': cart,
+	'cart': cart,
         'user_id': user_id,
+	'message': message,
     }
     return render(request, 'basket/basket-view.html', context)
-        

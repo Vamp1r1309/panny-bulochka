@@ -1,0 +1,13 @@
+[Unit]
+Description=Bot in  PannyBulochka
+After=multi-user.target
+
+[Service]
+Type=simple
+ExecStart=/root/panny-bulochka/backend/venv/bin/python /root/panny-bulochka/backend/manage.py run_bot
+WorkingDirectory=/root/panny-bulochka/backend
+user=root
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

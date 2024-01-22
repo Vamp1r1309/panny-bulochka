@@ -25,9 +25,20 @@
 			{% endfor %}
 
 			<div class="d-grid gap-2">
-				<button type="submit" class="btn btn-primary mt-4">Регистрация</button>
+				<button type="submit" class="btn btn-primary mt-4" data-action="register_complete">Регистрация</button>
 			</div>
 		</form>
 	</div>
 </div>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script>
+	let tg = window.Telegram;
+
+	if(tg != undefined){
+		if (tg.WebApp != undefined && tg.WebApp.initData != undefined){
+			  tg.WebApp.expand();
+
+		}
+	}
+</script>
 {% endblock content %}

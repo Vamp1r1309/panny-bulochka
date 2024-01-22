@@ -9,7 +9,7 @@ async def get_start(message: Message, bot: Bot):
     await set_commands(bot)
     print(message.from_user.id)
     print(type(message.from_user.id))
-    web_app_register = WebAppInfo(url=f"https://www.pannybulochka.ru/register/{message.from_user.id}")
+    web_app_register = WebAppInfo(url=f"https://www.pannybulochka.ru/register/{message.chat.id}")
     main_kb = InlineKeyboardMarkup(
         inline_keyboard=[
             [
@@ -65,7 +65,7 @@ async def get_call_help(callback: CallbackQuery, bot: Bot):
 
 
 async def enter_bonus_and_enter_menu(callback: CallbackQuery, bot: Bot):
-    web_app_menu = WebAppInfo(url=f"https://www.pannybulochka.ru/api/{callback.message.from_user.id}")
+    web_app_menu = WebAppInfo(url=f"https://www.pannybulochka.ru/api/{callback.message.chat.id}")
     main_kb = InlineKeyboardMarkup(
         inline_keyboard=[
             [
